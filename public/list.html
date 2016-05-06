@@ -1,0 +1,23 @@
+<section id="todoapp" ng-controller="TodoCtrl">
+  <header id="header">
+    <h1>todos</h1>
+    <form id="todo-form" ng-submit="addTodo()" ng-show="isLogged">
+      <input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" autofocus>
+    </form>
+  </header>
+
+  <section id="main" ng-show="todos.length">
+    <ul id="todo-list">
+      <li ng-repeat="todo in todos track by todo.id" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+        <div class="view">
+          <input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
+          <label ng-dblclick="editTodo(todo)">{{todo.title}}</label>
+          <button class="destroy" ng-click="removeTodo(todo)" ng-show="isLogged"></button>
+        </div>
+        <form ng-submit="doneEditing(todo)">
+          <input class="edit" ng-model="todo.title" ng-blur="doneEditing(todo)" todo-escape="revertEditing(todo)">
+        </form>
+      </li>
+    </ul>
+  </section>
+</section>
